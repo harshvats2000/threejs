@@ -39,6 +39,17 @@ function main() {
 
   //add body to the scene
   scene.add(cube);
+
+  function resizeRendererToDisplaySize(renderer) {
+    const canvas = renderer.domElement;
+    const width = canvas.clientWidth;
+    const height = canvas.clientHeight;
+    const needResize = canvas.width !== width || canvas.height !== height;
+    if (needResize) {
+      renderer.setSize(width, height, false);
+    }
+    return needResize;
+  }
   
   function render(time) {
     time *= 0.001;  // convert time to seconds
@@ -47,9 +58,11 @@ function main() {
     cube.rotation.y = time;
 
     //fixing the stretcing issue of cubes when resizing window
-    const canvas = renderer.domElement;
-    camera.aspect = canvas.clientWidth / canvas.clientHeight;
-    camera.updateProjectionMatrix();
+    if (resizeRendererToDisplaySize(renderer)) {
+      const canvas = renderer.domElement;
+      camera.aspect = canvas.clientWidth / canvas.clientHeight;
+      camera.updateProjectionMatrix();
+    }
 
     renderer.render(scene, camera);
 
