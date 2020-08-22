@@ -16,6 +16,9 @@ function main() {
   //define scene
   const scene = new THREE.Scene();
 
+  //adding background color to scene
+  scene.background = new THREE.Color(0xAAAAAA);
+
   //add light to the scene
   {
     const color = 'white';
@@ -42,8 +45,9 @@ function main() {
 
   function resizeRendererToDisplaySize(renderer) {
     const canvas = renderer.domElement;
-    const width = canvas.clientWidth;
-    const height = canvas.clientHeight;
+    const pixelRatio = window.devicePixelRatio;
+    const width = canvas.clientWidth * pixelRatio | 0;
+    const height = canvas.clientHeight * pixelRatio | 0;
     const needResize = canvas.width !== width || canvas.height !== height;
     if (needResize) {
       renderer.setSize(width, height, false);
